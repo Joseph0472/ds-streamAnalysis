@@ -34,12 +34,14 @@ import { bugs, website, server } from "variables/general.js";
 import {
   dailySalesChart,
   emailsSubscriptionChart,
-  completedTasksChart
+  completedTasksChart,
 } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 const useStyles = makeStyles(styles);
+
+// TODO: The company number should be accordingly.
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -52,17 +54,15 @@ export default function Dashboard() {
               <CardIcon color="warning">
                 <Icon>content_copy</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Used Space</p>
-              <h3 className={classes.cardTitle}>
-                49/50 <small>GB</small>
-              </h3>
+              <p className={classes.cardCategory}>Active Company</p>
+              <h3 className={classes.cardTitle}>49/50</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
                 <Danger>
                   <Warning />
                 </Danger>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
+                <a href="#pablo" onClick={(e) => e.preventDefault()}>
                   Get more space
                 </a>
               </div>
@@ -210,7 +210,7 @@ export default function Dashboard() {
                     tasksIndexes={[0, 1, 2, 3]}
                     tasks={bugs}
                   />
-                )
+                ),
               },
               {
                 tabName: "Website",
@@ -221,7 +221,7 @@ export default function Dashboard() {
                     tasksIndexes={[0, 1]}
                     tasks={website}
                   />
-                )
+                ),
               },
               {
                 tabName: "Server",
@@ -232,8 +232,8 @@ export default function Dashboard() {
                     tasksIndexes={[0, 1, 2]}
                     tasks={server}
                   />
-                )
-              }
+                ),
+              },
             ]}
           />
         </GridItem>
@@ -253,7 +253,7 @@ export default function Dashboard() {
                   ["1", "Dakota Rice", "$36,738", "Niger"],
                   ["2", "Minerva Hooper", "$23,789", "Curaçao"],
                   ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                  ["4", "Philip Chaney", "$38,735", "Korea, South"]
+                  ["4", "Philip Chaney", "$38,735", "Korea, South"],
                 ]}
               />
             </CardBody>
