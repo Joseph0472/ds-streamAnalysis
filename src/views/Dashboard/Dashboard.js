@@ -55,7 +55,7 @@ export default function Dashboard() {
                 <Icon>content_copy</Icon>
               </CardIcon>
               <p className={classes.cardCategory}>Active Company</p>
-              <h3 className={classes.cardTitle}>49/50</h3>
+              <h3 className={classes.cardTitle}>49/100</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -75,8 +75,8 @@ export default function Dashboard() {
               <CardIcon color="success">
                 <Store />
               </CardIcon>
-              <p className={classes.cardCategory}>Revenue</p>
-              <h3 className={classes.cardTitle}>$34,245</h3>
+              <p className={classes.cardCategory}>Students</p>
+              <h3 className={classes.cardTitle}>18</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -92,8 +92,8 @@ export default function Dashboard() {
               <CardIcon color="danger">
                 <Icon>info_outline</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Fixed Issues</p>
-              <h3 className={classes.cardTitle}>75</h3>
+              <p className={classes.cardCategory}>Positions optimizer</p>
+              <h3 className={classes.cardTitle}>75%</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
