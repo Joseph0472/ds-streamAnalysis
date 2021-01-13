@@ -60,14 +60,14 @@ const dashboardRoutes = [
     component: TableList,
     layout: "/admin"
   },
-  {
-    path: "/typography",
-    name: "Typography",
-    rtlName: "طباعة",
-    icon: LibraryBooks,
-    component: Typography,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/typography",
+  //   name: "Typography",
+  //   rtlName: "طباعة",
+  //   icon: LibraryBooks,
+  //   component: Typography,
+  //   layout: "/admin"
+  // },
   {
     path: "/icons",
     name: "Icons",

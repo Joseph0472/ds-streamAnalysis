@@ -50,20 +50,20 @@ export default function TableList() {
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>Simple Table</h4>
             <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
+              Here is a subtitle for this table1
             </p>
           </CardHeader>
           <CardBody>
             <Table
               tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary"]}
+              tableHead={["Company Name", "City", "Contact Email", "Status"]}
               tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
+                ["The University of Auckland", "Auckland", "workemail1@gmail.com", "Vacant"],
+                ["Spark", "Auckland", "workemail2@gmail.com", "Vacant"],
+                ["Sage Rodriguez", "Auckland", "workemail3@gmail.com", "Interviews in process"],
+                ["Philip Chaney", "Auckland", "workemail4@gmail.com", "Interviews in process"],
+                ["Doris Greene", "Auckland", "workemail5@gmail.com", "Occupied"],
+                ["Mason Porter", "Auckland", "workemail6@gmail.com", "Occupied"]
               ]}
             />
           </CardBody>

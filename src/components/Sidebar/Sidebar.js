@@ -83,7 +83,7 @@ export default function Sidebar(props) {
   var brand = (
     <div className={classes.logo}>
       <a
-        href="https://www.creative-tim.com?ref=mdr-sidebar"
+        href="https://www.auckland.ac.nz/en.html?gclid=Cj0KCQiA0fr_BRDaARIsAABw4EvvJo363Xv5lPkEUl7wrM9PtUnJ9Ck7g50pfnScl9d5qIacEUyy1SUaAgaXEALw_wcB"
         className={classNames(classes.logoLink, {
           [classes.logoLinkRTL]: props.rtlActive
         })}

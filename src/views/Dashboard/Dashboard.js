@@ -41,7 +41,7 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 
 const useStyles = makeStyles(styles);
 
-// TODO: The company number should be accordingly.
+// TODO: All data should be accordingly.
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -62,9 +62,6 @@ export default function Dashboard() {
                 <Danger>
                   <Warning />
                 </Danger>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  Get more space
-                </a>
               </div>
             </CardFooter>
           </Card>
@@ -75,13 +72,13 @@ export default function Dashboard() {
               <CardIcon color="success">
                 <Store />
               </CardIcon>
-              <p className={classes.cardCategory}>Students</p>
-              <h3 className={classes.cardTitle}>18</h3>
+              <p className={classes.cardCategory}>Active Students</p>
+              <h3 className={classes.cardTitle}>48</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
                 <DateRange />
-                Last 24 Hours
+                Last 2 weeks
               </div>
             </CardFooter>
           </Card>
@@ -98,27 +95,11 @@ export default function Dashboard() {
             <CardFooter stats>
               <div className={classes.stats}>
                 <LocalOffer />
-                Tracked from Github
               </div>
             </CardFooter>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
-          <Card>
-            <CardHeader color="info" stats icon>
-              <CardIcon color="info">
-                <Accessibility />
-              </CardIcon>
-              <p className={classes.cardCategory}>Followers</p>
-              <h3 className={classes.cardTitle}>+245</h3>
-            </CardHeader>
-            <CardFooter stats>
-              <div className={classes.stats}>
-                <Update />
-                Just Updated
-              </div>
-            </CardFooter>
-          </Card>
         </GridItem>
       </GridContainer>
       <GridContainer>
@@ -134,12 +115,8 @@ export default function Dashboard() {
               />
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>Daily Sales</h4>
+              <h4 className={classes.cardTitle}>Yearly Performance</h4>
               <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> 55%
-                </span>{" "}
-                increase in today sales.
               </p>
             </CardBody>
             <CardFooter chart>
@@ -162,8 +139,7 @@ export default function Dashboard() {
               />
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>Email Subscriptions</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
+              <h4 className={classes.cardTitle}>Companies reach out</h4>
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
@@ -185,7 +161,6 @@ export default function Dashboard() {
             </CardHeader>
             <CardBody>
               <h4 className={classes.cardTitle}>Completed Tasks</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
@@ -198,12 +173,10 @@ export default function Dashboard() {
       <GridContainer>
         <GridItem xs={12} sm={12} md={6}>
           <CustomTabs
-            title="Tasks:"
+            title="Notes:"
             headerColor="primary"
             tabs={[
               {
-                tabName: "Bugs",
-                tabIcon: BugReport,
                 tabContent: (
                   <Tasks
                     checkedIndexes={[0, 3]}
@@ -240,20 +213,20 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
+              <h4 className={classes.cardTitleWhite}>Students Stats</h4>
               <p className={classes.cardCategoryWhite}>
-                New employees on 15th September, 2016
+                New internships on 15th September, 2021
               </p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="warning"
-                tableHead={["ID", "Name", "Salary", "Country"]}
+                tableHead={["ID", "Name","Company" ,"Location"]}
                 tableData={[
-                  ["1", "Dakota Rice", "$36,738", "Niger"],
-                  ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                  ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                  ["4", "Philip Chaney", "$38,735", "Korea, South"],
+                  ["1", "Dakota Rice", "The University of Auckland", "Auckland"],
+                  ["2", "Minerva Hooper", "Spark", "Auckland"],
+                  ["3", "Sage Rodriguez", "Orion", "Auckland"],
+                  ["4", "Philip Chaney", "The Tower", "Auckland"],
                 ]}
               />
             </CardBody>
