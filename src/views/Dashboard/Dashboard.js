@@ -89,7 +89,7 @@ export default function Dashboard() {
               <CardIcon color="danger">
                 <Icon>info_outline</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Positions optimizer</p>
+              <p className={classes.cardCategory}>Positions Optimizer</p>
               <h3 className={classes.cardTitle}>75%</h3>
             </CardHeader>
             <CardFooter stats>
@@ -121,7 +121,7 @@ export default function Dashboard() {
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
-                <AccessTime /> updated 4 minutes ago
+                <AccessTime /> Updated 4 Minutes ago
               </div>
             </CardFooter>
           </Card>
@@ -139,11 +139,11 @@ export default function Dashboard() {
               />
             </CardHeader>
             <CardBody>
-              <h4 className={classes.cardTitle}>Companies reach out</h4>
+              <h4 className={classes.cardTitle}>Companies Reach Out</h4>
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
+                <AccessTime /> Campaign Sent 2 Days Ago
               </div>
             </CardFooter>
           </Card>
@@ -164,7 +164,7 @@ export default function Dashboard() {
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
+                <AccessTime /> Campaign Sent 2 Days Ago
               </div>
             </CardFooter>
           </Card>
