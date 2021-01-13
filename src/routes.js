@@ -28,6 +28,7 @@ import Language from "@material-ui/icons/Language";
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
+import StudentList from "views/StudentList/StudentList.js";
 import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps/Maps.js";
@@ -53,11 +54,19 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/table",
-    name: "Table List",
+    path: "/companytable",
+    name: "Company List",
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: TableList,
+    layout: "/admin"
+  },
+  {
+    path: "/studenttable",
+    name: "Student List",
+    rtlName: "قائمة الجدول",
+    icon: "content_paste",
+    component: StudentList,
     layout: "/admin"
   },
   // {
@@ -68,14 +77,14 @@ const dashboardRoutes = [
   //   component: Typography,
   //   layout: "/admin"
   // },
-  {
-    path: "/icons",
-    name: "Icons",
-    rtlName: "الرموز",
-    icon: BubbleChart,
-    component: Icons,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   rtlName: "الرموز",
+  //   icon: BubbleChart,
+  //   component: Icons,
+  //   layout: "/admin"
+  // },
   {
     path: "/notifications",
     name: "Notifications",

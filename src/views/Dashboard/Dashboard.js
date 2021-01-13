@@ -28,7 +28,6 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-
 import { bugs, website, server } from "variables/general.js";
 
 import {
@@ -61,6 +60,7 @@ export default function Dashboard() {
               <div className={classes.stats}>
                 <Danger>
                   <Warning />
+                  More companies needed
                 </Danger>
               </div>
             </CardFooter>
@@ -78,7 +78,7 @@ export default function Dashboard() {
             <CardFooter stats>
               <div className={classes.stats}>
                 <DateRange />
-                Last 2 weeks
+                Updated Last 2 weeks
               </div>
             </CardFooter>
           </Card>

@@ -48,9 +48,9 @@ export default function TableList() {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Active Companies List</h4>
+            <h4 className={classes.cardTitleWhite}>Active Students List</h4>
             <p className={classes.cardCategoryWhite}>
-              Companies seeking for interns
+              Students require internship opportunities
             </p>
           </CardHeader>
           <CardBody>
@@ -58,12 +58,12 @@ export default function TableList() {
               tableHeaderColor="primary"
               tableHead={["Company Name", "City", "Contact Email", "Status"]}
               tableData={[
-                ["The University of Auckland", "Auckland", "workemail1@gmail.com", "Vacant"],
-                ["Spark", "Auckland", "workemail2@gmail.com", "Vacant"],
-                ["Orion", "Auckland", "workemail3@gmail.com", "Interviews in process"],
-                ["The tower", "Auckland", "workemail4@gmail.com", "Interviews in process"],
-                ["Parkable", "Auckland", "workemail5@gmail.com", "Occupied"],
-                ["ANZ", "Auckland", "workemail6@gmail.com", "Occupied"]
+                ["David Lee", "Auckland", "workemail1@gmail.com", "Vacant"],
+                ["Lebron James", "Auckland", "workemail2@gmail.com", "Vacant"],
+                ["Sage Rodriguez", "Auckland", "workemail3@gmail.com", "Interviews in process"],
+                ["Philip Chaney", "Auckland", "workemail4@gmail.com", "Interviews in process"],
+                ["Doris Greene", "Auckland", "workemail5@gmail.com", "Occupied"],
+                ["Mason Porter", "Auckland", "workemail6@gmail.com", "Occupied"]
               ]}
             />
           </CardBody>
@@ -72,9 +72,9 @@ export default function TableList() {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Inactive Companies List</h4>
+            <h4 className={classes.cardTitleWhite}>Inactive Students List</h4>
             <p className={classes.cardCategoryWhite}>
-              Companies have recruited interns
+              Students have got internship opportunities
             </p>
           </CardHeader>
           <CardBody>
@@ -82,12 +82,12 @@ export default function TableList() {
               tableHeaderColor="primary"
               tableHead={["Company Name", "City", "Contact Email", "Status"]}
               tableData={[
-                ["The University of Auckland", "Auckland", "workemail1@gmail.com", "Vacant"],
-                ["Spark", "Auckland", "workemail2@gmail.com", "Vacant"],
-                ["Orion", "Auckland", "workemail3@gmail.com", "Interviews in process"],
-                ["The tower", "Auckland", "workemail4@gmail.com", "Interviews in process"],
-                ["Parkable", "Auckland", "workemail5@gmail.com", "Occupied"],
-                ["ANZ", "Auckland", "workemail6@gmail.com", "Occupied"]
+                ["Philip Chaney", "Auckland", "workemail1@gmail.com", "Vacant"],
+                ["Anthony Davis", "Auckland", "workemail2@gmail.com", "Vacant"],
+                ["Sage Rodriguez", "Auckland", "workemail3@gmail.com", "Interviews in process"],
+                ["Philip Chaney", "Auckland", "workemail4@gmail.com", "Interviews in process"],
+                ["Doris Greene", "Auckland", "workemail5@gmail.com", "Occupied"],
+                ["Mason Porter", "Auckland", "workemail6@gmail.com", "Occupied"]
               ]}
             />
           </CardBody>
