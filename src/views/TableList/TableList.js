@@ -8,6 +8,16 @@ import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
+import MaterialTable from 'material-table'
+import Button from "components/CustomButtons/Button.js";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
+// MaterialTable ref: https://material-table.com/#/
+// TODO: Add the full object to dispatch and reducer
+//       Finish the other three dispatch function,
+//       Duplicated them to student table
+//       Backend, DB...
 
 const styles = {
   cardCategoryWhite: {
@@ -43,55 +53,105 @@ const useStyles = makeStyles(styles);
 
 export default function TableList() {
   const classes = useStyles();
+  const { useState } = React;
+  const dispatch = useDispatch();
+
+  const [columns, setColumns] = useState([
+    { title: 'Company Name', field: 'companyName' },
+    { title: 'Contact Person', field: 'cPersonName'},
+    { title: 'Contact Email', field: 'email'},
+    { title: 'If Active', field: 'ifActive', type: 'boolean'},
+    { title: 'Convo start date', field: 'sdate', type: 'date'},
+    { title: 'Convo end date', field: 'edate', type: 'date'},   
+    {
+      title: 'First Interest',
+      field: 'interest1',
+      lookup: { 0: 'No Preference', 1: 'Frontend Developer', 2: 'Backend Developer', 3: 'Full Stack Developer', 4: 'Data Analyst', 5: 'UI Designer', 6: 'Tester', 7: 'Consultant', 8: 'Doc Manager' },
+    },
+    {
+      title: 'Second Interest',
+      field: 'interest2',
+      lookup: { 0: 'No Preference', 1: 'Frontend Developer', 2: 'Backend Developer', 3: 'Full Stack Developer', 4: 'Data Analyst', 5: 'UI Designer', 6: 'Tester', 7: 'Consultant', 8: 'Doc Manager' },
+    },
+    {
+      title: 'Third Interest',
+      field: 'interest3',
+      lookup: { 0: 'No Preference', 1: 'Frontend Developer', 2: 'Backend Developer', 3: 'Full Stack Developer', 4: 'Data Analyst', 5: 'UI Designer', 6: 'Tester', 7: 'Consultant', 8: 'Doc Manager' },
+    },
+  ]);
+
+  const state = useSelector((state) => state.company)
+  console.log(state)  // A company array
+
+  var [data, setData] = useState(state);
+
+  const addCompany = (ndata) => {
+    dispatch({
+        type: "CREATE_COMPANY",
+        payload: {
+          companyName: ndata.companyName,
+          cPersonName: ndata.cPersonName,
+        }
+      }
+    )
+  }
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Active Companies List</h4>
+            <h4 className={classes.cardTitleWhite}>Companies List</h4>
             <p className={classes.cardCategoryWhite}>
-              Companies seeking for interns
+              Detailed companies information
             </p>
           </CardHeader>
           <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Company Name", "City", "Contact Email", "Status"]}
-              tableData={[
-                ["The University of Auckland", "Auckland", "workemail1@gmail.com", "Vacant"],
-                ["Spark", "Auckland", "workemail2@gmail.com", "Vacant"],
-                ["Orion", "Auckland", "workemail3@gmail.com", "Interviews in process"],
-                ["The tower", "Auckland", "workemail4@gmail.com", "Interviews in process"],
-                ["Parkable", "Auckland", "workemail5@gmail.com", "Occupied"],
-                ["ANZ", "Auckland", "workemail6@gmail.com", "Occupied"]
-              ]}
-            />
+    <MaterialTable
+      title=""
+      columns={columns}
+      data={data}
+      editable={{
+        onRowAdd: newData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              setData([...data, newData]);
+              addCompany(newData);
+              resolve();
+            }, 1000)
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataUpdate = [...data];
+              const index = oldData.tableData.id;
+              dataUpdate[index] = newData;
+              setData([...dataUpdate]);
+
+              resolve();
+            }, 1000)
+          }).then(console.log(newData)),
+        onRowDelete: oldData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataDelete = [...data];
+              const index = oldData.tableData.id;
+              dataDelete.splice(index, 1);
+              setData([...dataDelete]);
+              
+              resolve()
+            }, 1000)
+          }).then(console.log(data)),
+      }}
+    />
           </CardBody>
         </Card>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Inactive Companies List</h4>
-            <p className={classes.cardCategoryWhite}>
-              Companies have recruited interns
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Company Name", "City", "Contact Email", "Status"]}
-              tableData={[
-                ["The University of Auckland", "Auckland", "workemail1@gmail.com", "Vacant"],
-                ["Spark", "Auckland", "workemail2@gmail.com", "Vacant"],
-                ["Orion", "Auckland", "workemail3@gmail.com", "Interviews in process"],
-                ["The tower", "Auckland", "workemail4@gmail.com", "Interviews in process"],
-                ["Parkable", "Auckland", "workemail5@gmail.com", "Occupied"],
-                ["ANZ", "Auckland", "workemail6@gmail.com", "Occupied"]
-              ]}
-            />
-          </CardBody>
-        </Card>
+        <Button
+          color="primary"
+          onClick={()=>console.log(state)}
+          >
+          show state
+          </Button>
       </GridItem>
     </GridContainer>
   );
