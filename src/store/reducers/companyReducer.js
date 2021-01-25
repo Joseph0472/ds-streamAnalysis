@@ -14,11 +14,41 @@ const companyReducer = (state = initState.companies, action) => {
 
     switch(type) {
         case "CREATE_COMPANY":
-            console.log("payload: ", payload)
             return [...state, {
                 companyName: payload.companyName,
-                cPersonName: payload.cPersonName
-            }]
+                cPersonName: payload.cPersonName,
+                email: payload.email,
+                ifActive: payload.ifActive,
+                sdate: payload.sdate,
+                edate: payload.edate,
+                interest1: payload.interest1,
+                interest2: payload.interest2,
+                interest3: payload.interest3,
+            }];
+        case "DELETE_COMPANY":
+            const newState = [...state];
+            const i = newState.findIndex(x => x.companyName == payload.companyName);
+            newState.splice(i, 1);
+            return [...newState];
+        case "UPDATE_COMPANY":
+            const dataUpdate = [...state];
+            const index = payload.index;
+
+            //console.log(payload) 
+            //console.log([...state][index])
+
+            dataUpdate[index] = {
+                companyName: payload.companyName,
+                cPersonName: payload.cPersonName,
+                email: payload.email,
+                ifActive: payload.ifActive,
+                sdate: payload.sdate,
+                edate: payload.edate,
+                interest1: payload.interest1,
+                interest2: payload.interest2,
+                interest3: payload.interest3,
+            }
+            return [...dataUpdate];
             
         default: 
             return state

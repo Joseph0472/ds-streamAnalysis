@@ -14,8 +14,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 // MaterialTable ref: https://material-table.com/#/
-// TODO: Add the full object to dispatch and reducer
-//       Finish the other three dispatch function,
+// TODO: Add the full object to dispatch and reducer DONE
+//       Finish the other three dispatch function, DONE
 //       Duplicated them to student table
 //       Backend, DB...
 
@@ -91,9 +91,44 @@ export default function TableList() {
         payload: {
           companyName: ndata.companyName,
           cPersonName: ndata.cPersonName,
+          email: ndata.email,
+          ifActive: ndata.ifActive,
+          sdate: ndata.sdate,
+          edate: ndata.edate,
+          interest1: ndata.interest1,
+          interest2: ndata.interest2,
+          interest3: ndata.interest3,
         }
+      })
+  }
+
+  const deleteCompany = (id) => {
+    var dcomName = state[id].companyName;
+    dispatch({
+      type: "DELETE_COMPANY",
+      payload: {
+        companyName: dcomName,
       }
-    )
+    })
+  }
+
+  const updateCompany = (ndata) => {
+    console.log(ndata)
+    dispatch({
+      type: "UPDATE_COMPANY",
+      payload: {
+          index: ndata.tableData.id,
+          companyName: ndata.companyName,
+          cPersonName: ndata.cPersonName,
+          email: ndata.email,
+          ifActive: ndata.ifActive,
+          sdate: ndata.sdate,
+          edate: ndata.edate,
+          interest1: ndata.interest1,
+          interest2: ndata.interest2,
+          interest3: ndata.interest3,
+      }
+    })
   }
 
   return (
@@ -127,7 +162,7 @@ export default function TableList() {
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
               setData([...dataUpdate]);
-
+              updateCompany(newData)
               resolve();
             }, 1000)
           }).then(console.log(newData)),
@@ -138,10 +173,10 @@ export default function TableList() {
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
               setData([...dataDelete]);
-              
+              deleteCompany(index);
               resolve()
             }, 1000)
-          }).then(console.log(data)),
+          }),
       }}
     />
           </CardBody>
