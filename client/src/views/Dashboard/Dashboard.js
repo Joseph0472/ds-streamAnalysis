@@ -29,6 +29,7 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import { bugs, website, server } from "variables/general.js";
+import { useSelector } from "react-redux";
 
 import {
   dailySalesChart,
@@ -44,6 +45,25 @@ const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
+  const { useState } = React;
+  const state = useSelector((state) => state)
+
+  var companyNum = state.company.length;
+  var activeCompNum = 0;
+  var activeStuNum = 0;
+  state.company.forEach(function(item,index){
+       if(item.ifActive) {
+         activeCompNum++;
+       }
+    });
+  state.student.forEach(function(item,index) {
+      if(item.state !== 0){
+        activeStuNum++;
+      }
+  }
+
+  )
+  
   return (
     <div>
       <GridContainer>
@@ -54,7 +74,7 @@ export default function Dashboard() {
                 <Icon>content_copy</Icon>
               </CardIcon>
               <p className={classes.cardCategory}>Active Company</p>
-              <h3 className={classes.cardTitle}>49/100</h3>
+              <h3 className={classes.cardTitle}>{activeCompNum}/{companyNum}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -73,7 +93,7 @@ export default function Dashboard() {
                 <Store />
               </CardIcon>
               <p className={classes.cardCategory}>Active Students</p>
-              <h3 className={classes.cardTitle}>48</h3>
+              <h3 className={classes.cardTitle}>{activeStuNum}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>

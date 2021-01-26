@@ -8,6 +8,17 @@ import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
+import MaterialTable from 'material-table'
+import Button from "components/CustomButtons/Button.js";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
+// MaterialTable ref: https://material-table.com/#/
+// TODO: Add the full object to dispatch and reducer DONE
+//       Finish the other three dispatch function, DONE
+//       Duplicated them to student table (id should be implemted well)
+//       Backend, DB...
+//       Forecasting: using 
 
 const styles = {
   cardCategoryWhite: {
@@ -43,55 +54,141 @@ const useStyles = makeStyles(styles);
 
 export default function TableList() {
   const classes = useStyles();
+  const { useState } = React;
+  const dispatch = useDispatch();
+
+  const [columns, setColumns] = useState([
+    { title: 'Student Name', field: 'studentName' },
+    { title: 'Email', field: 'email'},
+    {
+      title: 'State',
+      field: 'state',
+      lookup: { 0: 'Not active', 1: 'Seeking for Interviews', 2: 'Waiting for Response', 3: 'Got the Internship'},
+    }, 
+    {
+      title: 'First Interest',
+      field: 'interest1',
+      lookup: { 0: 'No Preference', 1: 'Frontend Developer', 2: 'Backend Developer', 3: 'Full Stack Developer', 4: 'Data Analyst', 5: 'UI Designer', 6: 'Tester', 7: 'Consultant', 8: 'Doc Manager' },
+    },
+    {
+      title: 'Second Interest',
+      field: 'interest2',
+      lookup: { 0: 'No Preference', 1: 'Frontend Developer', 2: 'Backend Developer', 3: 'Full Stack Developer', 4: 'Data Analyst', 5: 'UI Designer', 6: 'Tester', 7: 'Consultant', 8: 'Doc Manager' },
+    },
+    {
+      title: 'Third Interest',
+      field: 'interest3',
+      lookup: { 0: 'No Preference', 1: 'Frontend Developer', 2: 'Backend Developer', 3: 'Full Stack Developer', 4: 'Data Analyst', 5: 'UI Designer', 6: 'Tester', 7: 'Consultant', 8: 'Doc Manager' },
+    },
+  ]);
+
+  const state = useSelector((state) => state.student)
+  console.log(state)  // A student array
+
+  var [data, setData] = useState(state);
+
+  const addCompany = (ndata) => {
+    dispatch({
+        type: "CREATE_COMPANY",
+        payload: {
+          studentName: ndata.studentName,
+          cPersonName: ndata.cPersonName,
+          email: ndata.email,
+          ifActive: ndata.ifActive,
+          sdate: ndata.sdate,
+          edate: ndata.edate,
+          interest1: ndata.interest1,
+          interest2: ndata.interest2,
+          interest3: ndata.interest3,
+        }
+      })
+  }
+
+  const deleteCompany = (id) => {
+    var dcomName = state[id].companyName;
+    dispatch({
+      type: "DELETE_COMPANY",
+      payload: {
+        companyName: dcomName,
+      }
+    })
+  }
+
+  const updateCompany = (ndata) => {
+    console.log(ndata)
+    dispatch({
+      type: "UPDATE_COMPANY",
+      payload: {
+          index: ndata.tableData.id,
+          companyName: ndata.companyName,
+          cPersonName: ndata.cPersonName,
+          email: ndata.email,
+          ifActive: ndata.ifActive,
+          sdate: ndata.sdate,
+          edate: ndata.edate,
+          interest1: ndata.interest1,
+          interest2: ndata.interest2,
+          interest3: ndata.interest3,
+      }
+    })
+  }
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Active Students List</h4>
+            <h4 className={classes.cardTitleWhite}>Companies List</h4>
             <p className={classes.cardCategoryWhite}>
-              Students require internship opportunities
+              Detailed students information
             </p>
           </CardHeader>
           <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Company Name", "City", "Contact Email", "Status"]}
-              tableData={[
-                ["David Lee", "Auckland", "workemail1@gmail.com", "Vacant"],
-                ["Lebron James", "Auckland", "workemail2@gmail.com", "Vacant"],
-                ["Sage Rodriguez", "Auckland", "workemail3@gmail.com", "Interviews in process"],
-                ["Philip Chaney", "Auckland", "workemail4@gmail.com", "Interviews in process"],
-                ["Doris Greene", "Auckland", "workemail5@gmail.com", "Occupied"],
-                ["Mason Porter", "Auckland", "workemail6@gmail.com", "Occupied"]
-              ]}
-            />
+    <MaterialTable
+      title=""
+      columns={columns}
+      data={data}
+      editable={{
+        onRowAdd: newData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              setData([...data, newData]);
+              //addCompany(newData);
+              resolve();
+            }, 1000)
+          }),
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataUpdate = [...data];
+              const index = oldData.tableData.id;
+              dataUpdate[index] = newData;
+              setData([...dataUpdate]);
+              //updateCompany(newData)
+              resolve();
+            }, 1000)
+          }).then(console.log(newData)),
+        onRowDelete: oldData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataDelete = [...data];
+              const index = oldData.tableData.id;
+              dataDelete.splice(index, 1);
+              setData([...dataDelete]);
+              //deleteCompany(index);
+              resolve()
+            }, 1000)
+          }),
+      }}
+    />
           </CardBody>
         </Card>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Inactive Students List</h4>
-            <p className={classes.cardCategoryWhite}>
-              Students have got internship opportunities
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Company Name", "City", "Contact Email", "Status"]}
-              tableData={[
-                ["Philip Chaney", "Auckland", "workemail1@gmail.com", "Vacant"],
-                ["Anthony Davis", "Auckland", "workemail2@gmail.com", "Vacant"],
-                ["Sage Rodriguez", "Auckland", "workemail3@gmail.com", "Interviews in process"],
-                ["Philip Chaney", "Auckland", "workemail4@gmail.com", "Interviews in process"],
-                ["Doris Greene", "Auckland", "workemail5@gmail.com", "Occupied"],
-                ["Mason Porter", "Auckland", "workemail6@gmail.com", "Occupied"]
-              ]}
-            />
-          </CardBody>
-        </Card>
+        <Button
+          color="primary"
+          onClick={()=>console.log(state)}
+          >
+          show state
+          </Button>
       </GridItem>
     </GridContainer>
   );
