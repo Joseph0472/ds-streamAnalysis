@@ -7,10 +7,12 @@ import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Store from "@material-ui/icons/Store";
 import Warning from "@material-ui/icons/Warning";
+import Done from "@material-ui/icons/Done";
 import DateRange from "@material-ui/icons/DateRange";
 import LocalOffer from "@material-ui/icons/LocalOffer";
 import Update from "@material-ui/icons/Update";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
+import Sync from "@material-ui/icons/Sync";
 import AccessTime from "@material-ui/icons/AccessTime";
 import Accessibility from "@material-ui/icons/Accessibility";
 import BugReport from "@material-ui/icons/BugReport";
@@ -38,6 +40,7 @@ import {
 } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
+import Success from "components/Typography/Success";
 
 const useStyles = makeStyles(styles);
 
@@ -51,18 +54,33 @@ export default function Dashboard() {
   var companyNum = state.company.length;
   var activeCompNum = 0;
   var activeStuNum = 0;
+  var employeedStuNum = 0;
   state.company.forEach(function(item,index){
        if(item.ifActive) {
          activeCompNum++;
        }
     });
+
   state.student.forEach(function(item,index) {
       if(item.state !== 0){
         activeStuNum++;
       }
+  });
+
+  state.student.forEach(function(item,index) {
+    if(item.state == 3){
+      employeedStuNum++;
+    }
+  });
+  
+  var comAlert
+  if(activeCompNum < activeStuNum){
+    comAlert = true;
+  } else {
+    comAlert = false
   }
 
-  )
+  var emRate = (employeedStuNum/activeStuNum).toFixed(2)*100;
   
   return (
     <div>
@@ -71,17 +89,24 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="warning" stats icon>
               <CardIcon color="warning">
-                <Icon>content_copy</Icon>
+                <Icon>corporate_fare</Icon>
               </CardIcon>
               <p className={classes.cardCategory}>Active Company</p>
               <h3 className={classes.cardTitle}>{activeCompNum}/{companyNum}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
+                {comAlert?                 
                 <Danger>
                   <Warning />
                   More companies needed
                 </Danger>
+                :
+                <Success>
+                  <Done />
+                  It looks good
+                </Success>
+                }
               </div>
             </CardFooter>
           </Card>
@@ -90,7 +115,7 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="success" stats icon>
               <CardIcon color="success">
-                <Store />
+                <Icon>group</Icon>
               </CardIcon>
               <p className={classes.cardCategory}>Active Students</p>
               <h3 className={classes.cardTitle}>{activeStuNum}</h3>
@@ -98,23 +123,24 @@ export default function Dashboard() {
             <CardFooter stats>
               <div className={classes.stats}>
                 <DateRange />
-                Updated Last 2 weeks
+                Current number of active students
               </div>
             </CardFooter>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
-            <CardHeader color="danger" stats icon>
-              <CardIcon color="danger">
-                <Icon>info_outline</Icon>
+            <CardHeader color="info" stats icon>
+              <CardIcon color="info">
+                <Icon>send</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Positions Optimizer</p>
-              <h3 className={classes.cardTitle}>75%</h3>
+              <p className={classes.cardCategory}>Employment rate</p>
+              <h3 className={classes.cardTitle}>{emRate}%</h3>
             </CardHeader>
             <CardFooter stats>
-              <div className={classes.stats}>
-                <LocalOffer />
+            <div className={classes.stats}>
+                <Sync />
+                Percentage of employed students
               </div>
             </CardFooter>
           </Card>
@@ -196,7 +222,9 @@ export default function Dashboard() {
             title="Notes:"
             headerColor="primary"
             tabs={[
-              {
+              {                
+                tabName: "Company",
+                tabIcon: Code,
                 tabContent: (
                   <Tasks
                     checkedIndexes={[0, 3]}
@@ -206,24 +234,13 @@ export default function Dashboard() {
                 ),
               },
               {
-                tabName: "Website",
+                tabName: "Student",
                 tabIcon: Code,
                 tabContent: (
                   <Tasks
                     checkedIndexes={[0]}
                     tasksIndexes={[0, 1]}
                     tasks={website}
-                  />
-                ),
-              },
-              {
-                tabName: "Server",
-                tabIcon: Cloud,
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[1]}
-                    tasksIndexes={[0, 1, 2]}
-                    tasks={server}
                   />
                 ),
               },

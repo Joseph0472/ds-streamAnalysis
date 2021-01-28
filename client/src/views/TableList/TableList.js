@@ -12,12 +12,18 @@ import MaterialTable from 'material-table'
 import Button from "components/CustomButtons/Button.js";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import readXlsxFile from 'read-excel-file';
+import XLSX from 'xlsx'
+import { Fireplace } from "@material-ui/icons";
+
 
 // MaterialTable ref: https://material-table.com/#/
 // TODO: Add the full object to dispatch and reducer DONE
 //       Finish the other three dispatch function, DONE
-//       Duplicated them to student table
-//       Backend, DB...
+//       Duplicated them to student table, DONE
+//       Backend, DONE
+//       Dashboard modi, DONE
+//       DB...
 
 const styles = {
   cardCategoryWhite: {
@@ -84,6 +90,38 @@ export default function TableList() {
   console.log(state)  // A company array
 
   var [data, setData] = useState(state);
+
+  const readExcel = (file) => {
+    const promise = new Promise((res, rej) => {
+      const fileReader = new FileReader();
+      fileReader.readAsArrayBuffer(file);
+
+      fileReader.onload = (e) => {
+        const bufferArray = e.target.result;
+        
+        const wb = XLSX.read(bufferArray, {type: 'buffer'});
+
+        const wsname = wb.SheetNames[0];
+        
+        const ws=wb.Sheets[wsname];
+
+        const data = XLSX.utils.sheet_to_json(ws)
+
+        res(data)
+      };
+
+      fileReader.onerror=(error) => {
+        rej(error);
+      };
+    });
+
+    promise.then((d)=>{
+      console.log(d)
+      
+    }
+
+    )
+  }
 
   const addCompany = (ndata) => {
     dispatch({
@@ -182,11 +220,27 @@ export default function TableList() {
           </CardBody>
         </Card>
         <Button
-          color="primary"
-          onClick={()=>console.log(state)}
-          >
-          show state
-          </Button>
+        variant="contained"
+        color="primary"
+        component="label"
+        >
+        Upload File
+        <input
+          type="file"
+          onChange = {(e)=>{
+            const file = e.target.files[0];
+            readExcel(file);
+          }}
+          hidden
+        />
+        </Button>
+          {/* <input type="file"
+          onChange = {(e)=>{
+            const file = e.target.files[0];
+            readExcel(file);
+          }}
+          /> */}
+          
       </GridItem>
     </GridContainer>
   );

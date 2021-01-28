@@ -87,16 +87,13 @@ export default function TableList() {
 
   var [data, setData] = useState(state);
 
-  const addCompany = (ndata) => {
+  const addStudent = (ndata) => {
     dispatch({
-        type: "CREATE_COMPANY",
+        type: "CREATE_STUDENT",
         payload: {
           studentName: ndata.studentName,
-          cPersonName: ndata.cPersonName,
           email: ndata.email,
-          ifActive: ndata.ifActive,
-          sdate: ndata.sdate,
-          edate: ndata.edate,
+          state: ndata.state,
           interest1: ndata.interest1,
           interest2: ndata.interest2,
           interest3: ndata.interest3,
@@ -104,28 +101,25 @@ export default function TableList() {
       })
   }
 
-  const deleteCompany = (id) => {
-    var dcomName = state[id].companyName;
+  const deleteStudent = (index) => {
+    var dstuName = state[index].studentName;
     dispatch({
-      type: "DELETE_COMPANY",
+      type: "DELETE_STUDENT",
       payload: {
-        companyName: dcomName,
+        studentName: dstuName,
       }
     })
   }
 
-  const updateCompany = (ndata) => {
+  const updateStudent = (ndata) => {
     console.log(ndata)
     dispatch({
-      type: "UPDATE_COMPANY",
+      type: "UPDATE_STUDENT",
       payload: {
           index: ndata.tableData.id,
-          companyName: ndata.companyName,
-          cPersonName: ndata.cPersonName,
+          studentName: ndata.studentName,
           email: ndata.email,
-          ifActive: ndata.ifActive,
-          sdate: ndata.sdate,
-          edate: ndata.edate,
+          state: ndata.state,
           interest1: ndata.interest1,
           interest2: ndata.interest2,
           interest3: ndata.interest3,
@@ -138,7 +132,7 @@ export default function TableList() {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Companies List</h4>
+            <h4 className={classes.cardTitleWhite}>Students List</h4>
             <p className={classes.cardCategoryWhite}>
               Detailed students information
             </p>
@@ -153,7 +147,7 @@ export default function TableList() {
           new Promise((resolve, reject) => {
             setTimeout(() => {
               setData([...data, newData]);
-              //addCompany(newData);
+              addStudent(newData);
               resolve();
             }, 1000)
           }),
@@ -164,7 +158,7 @@ export default function TableList() {
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
               setData([...dataUpdate]);
-              //updateCompany(newData)
+              updateStudent(newData)
               resolve();
             }, 1000)
           }).then(console.log(newData)),
@@ -175,7 +169,7 @@ export default function TableList() {
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
               setData([...dataDelete]);
-              //deleteCompany(index);
+              deleteStudent(index);
               resolve()
             }, 1000)
           }),
