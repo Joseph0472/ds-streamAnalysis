@@ -69,22 +69,22 @@ const dashboardRoutes = [
     component: StudentList,
     layout: "/admin"
   },
-  // {
-  //   path: "/typography",
-  //   name: "Typography",
-  //   rtlName: "طباعة",
-  //   icon: LibraryBooks,
-  //   component: Typography,
-  //   layout: "/admin"
-  // },
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   rtlName: "الرموز",
-  //   icon: BubbleChart,
-  //   component: Icons,
-  //   layout: "/admin"
-  // },
+  {
+    path: "/typography",
+    name: "Typography",
+    rtlName: "طباعة",
+    icon: LibraryBooks,
+    component: Typography,
+    layout: "/admin"
+  },
+  {
+    path: "/icons",
+    name: "Icons",
+    rtlName: "الرموز",
+    icon: BubbleChart,
+    component: Icons,
+    layout: "/admin"
+  },
   {
     path: "/notifications",
     name: "Notifications",

@@ -1,3 +1,10 @@
+import {
+    LOAD_COMPANIES_LOADING,
+    LOAD_COMPANIES_SUCCESS,
+    LOAD_COMPANIES_ERROR
+} from '../actions/action-types'
+import companyApi from '../../api/company'
+
 const initState = {
     companies: [
         { companyName: 'Tower Insurance Limited', cPersonName: 'Andrew', email: 'andrew@gmail.com', sdate: "1998-06-29", edate: "2003-08-02", ifActive: true, interest1: 4, interest2: 8, interest3: 8 },
@@ -9,7 +16,7 @@ const initState = {
       ]
 }
 
-const companyReducer = (state = initState.companies, action) => {
+const companyReducer = (state = [], action) => {
     const {type, payload} = action;
 
     switch(type) {
@@ -49,10 +56,34 @@ const companyReducer = (state = initState.companies, action) => {
                 interest3: payload.interest3,
             }
             return [...dataUpdate];
-            
+        case "ADD_COM_VIA_EXCEL":
+            console.log("pl data: ", payload.filedata)
+            console.log("state: ", state)
+            return state.push.apply(state,payload.filedata);
+        case LOAD_COMPANIES_LOADING:
+            console.log("in com reducer")
+            return com_loading(state, action);
+        case LOAD_COMPANIES_SUCCESS:
+            return com_loaded(state, action);
+        case LOAD_COMPANIES_ERROR:
+            return com_loaderr(state, action)
         default: 
             return state
     }
 }
 
 export default companyReducer
+
+function com_loading(state, action) {
+    return state;
+}
+
+function com_loaded(state, action) {
+    var incoming = action.companies
+    console.log(incoming)
+    return incoming
+}
+
+function com_loaderr(state, action) {
+    return state
+}

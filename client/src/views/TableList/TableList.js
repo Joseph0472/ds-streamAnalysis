@@ -10,12 +10,19 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import MaterialTable from 'material-table'
 import Button from "components/CustomButtons/Button.js";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import readXlsxFile from 'read-excel-file';
 import XLSX from 'xlsx'
-import { Fireplace } from "@material-ui/icons";
+import { addCom, deleteCom, updateCom } from '../../redux/actions/companyActions'
 
+import {loadCompanies} from '../../redux/actions/thunks/index'
 
 // MaterialTable ref: https://material-table.com/#/
 // TODO: Add the full object to dispatch and reducer DONE
@@ -23,7 +30,8 @@ import { Fireplace } from "@material-ui/icons";
 //       Duplicated them to student table, DONE
 //       Backend, DONE
 //       Dashboard modi, DONE
-//       DB...
+//       DB...DONE
+//       Standarize structure
 
 const styles = {
   cardCategoryWhite: {
@@ -58,15 +66,18 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function TableList() {
+  const result = loadCompanies()
   const classes = useStyles();
   const { useState } = React;
   const dispatch = useDispatch();
+  const [excelData, setExcelData] = useState()
 
   const [columns, setColumns] = useState([
     { title: 'Company Name', field: 'companyName' },
     { title: 'Contact Person', field: 'cPersonName'},
     { title: 'Contact Email', field: 'email'},
     { title: 'If Active', field: 'ifActive', type: 'boolean'},
+    { title: 'List Name', field: 'listName'},
     { title: 'Convo start date', field: 'sdate', type: 'date'},
     { title: 'Convo end date', field: 'edate', type: 'date'},   
     {
@@ -85,11 +96,13 @@ export default function TableList() {
       lookup: { 0: 'No Preference', 1: 'Frontend Developer', 2: 'Backend Developer', 3: 'Full Stack Developer', 4: 'Data Analyst', 5: 'UI Designer', 6: 'Tester', 7: 'Consultant', 8: 'Doc Manager' },
     },
   ]);
-
+  
   const state = useSelector((state) => state.company)
-  console.log(state)  // A company array
 
   var [data, setData] = useState(state);
+
+  const [open, setOpen] = React.useState(false);
+
 
   const readExcel = (file) => {
     const promise = new Promise((res, rej) => {
@@ -105,9 +118,9 @@ export default function TableList() {
         
         const ws=wb.Sheets[wsname];
 
-        const data = XLSX.utils.sheet_to_json(ws)
+        const eData = XLSX.utils.sheet_to_json(ws)
 
-        res(data)
+        res(eData)
       };
 
       fileReader.onerror=(error) => {
@@ -117,56 +130,61 @@ export default function TableList() {
 
     promise.then((d)=>{
       console.log(d)
-      
-    }
-
-    )
+      setOpen(true)
+      setExcelData(d);
+    })
   }
+
+  const readJson = (file) =>{
+    const fileReader = new FileReader();
+    fileReader.onloadend = ()=>{
+       try{
+          var obj = JSON.parse(fileReader.result);
+          console.log(obj)
+       }catch(e){
+       }
+    }
+    if( file !== undefined)
+       fileReader.readAsText(file);
+ }
 
   const addCompany = (ndata) => {
-    dispatch({
-        type: "CREATE_COMPANY",
-        payload: {
-          companyName: ndata.companyName,
-          cPersonName: ndata.cPersonName,
-          email: ndata.email,
-          ifActive: ndata.ifActive,
-          sdate: ndata.sdate,
-          edate: ndata.edate,
-          interest1: ndata.interest1,
-          interest2: ndata.interest2,
-          interest3: ndata.interest3,
-        }
-      })
+    dispatch(addCom(ndata))
   }
 
-  const deleteCompany = (id) => {
-    var dcomName = state[id].companyName;
-    dispatch({
-      type: "DELETE_COMPANY",
-      payload: {
-        companyName: dcomName,
-      }
-    })
+  const deleteCompany = (comList, index) => {
+    dispatch(deleteCom(comList, index))
   }
 
   const updateCompany = (ndata) => {
-    console.log(ndata)
+    dispatch(updateCom(ndata))
+  }
+
+  const addComViaExcel = () => {
+    //TODO: This function should add company info row by row instead of import the whole list. 1st: check if there are already one with the same company name. 2nd: if yes, update; if no, insert.
+
     dispatch({
-      type: "UPDATE_COMPANY",
+      type: "ADD_COM_VIA_EXCEL",
       payload: {
-          index: ndata.tableData.id,
-          companyName: ndata.companyName,
-          cPersonName: ndata.cPersonName,
-          email: ndata.email,
-          ifActive: ndata.ifActive,
-          sdate: ndata.sdate,
-          edate: ndata.edate,
-          interest1: ndata.interest1,
-          interest2: ndata.interest2,
-          interest3: ndata.interest3,
+        filedata: excelData
       }
     })
+    setOpen(false)
+  }
+
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  //test
+  function handleClick() {
+
+    console.log(result)
   }
 
   return (
@@ -211,7 +229,8 @@ export default function TableList() {
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
               setData([...dataDelete]);
-              deleteCompany(index);
+              console.log(state)
+              deleteCompany(state ,index);
               resolve()
             }, 1000)
           }),
@@ -224,7 +243,7 @@ export default function TableList() {
         color="primary"
         component="label"
         >
-        Upload File
+        Upload Excel File
         <input
           type="file"
           onChange = {(e)=>{
@@ -234,13 +253,51 @@ export default function TableList() {
           hidden
         />
         </Button>
-          {/* <input type="file"
+        <Button
+        variant="contained"
+        color="info"
+        component="label"
+        >
+        Upload Json File frim Trello
+        <input
+          type="file"
           onChange = {(e)=>{
             const file = e.target.files[0];
-            readExcel(file);
+            readJson(file);
           }}
-          /> */}
-          
+          hidden
+        />
+        </Button>
+        <Button onClick={handleClick}>
+          getAllCompany
+        </Button>
+
+          <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Data from Excel Detected!"}</DialogTitle>
+          <DialogContent>
+            {excelData != null ?
+            <DialogContentText id="alert-dialog-description">
+              Are you sure to upload {excelData.length} rows of data?
+            </DialogContentText>
+            :
+            <></>
+            }
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={refreshPage} color="primary">
+              No
+            </Button>
+            <Button color="primary" onClick={addComViaExcel} autoFocus>
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
+
       </GridItem>
     </GridContainer>
   );

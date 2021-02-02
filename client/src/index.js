@@ -18,9 +18,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
-import { createStore } from 'redux';
-import rootReducer from './store/reducers/rootReducer'
-import { Provicer, Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux';
+import rootReducer from './redux/reducers/rootReducer'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 
 // core components
 import Admin from "layouts/Admin.js";
@@ -29,7 +30,7 @@ import "assets/css/material-dashboard-react.css?v=1.9.0";
 
 const hist = createBrowserHistory();
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>

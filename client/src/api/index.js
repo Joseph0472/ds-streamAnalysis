@@ -1,5 +1,5 @@
-import {showMsg} from './showmsg';
+import {companyApi} from './company';
 
 export default {
-    showMsg,
+    companyApi,
 };

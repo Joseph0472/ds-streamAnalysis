@@ -1,0 +1,25 @@
+GET http://localhost:10000/api/company/
+
+###
+
+GET http://localhost:10000/api/6017f5ada7ab67112cce7971
+
+###
+
+POST http://localhost:10000/api/
+Content-Type: application/json
+
+{ 
+    "companyName": "Tower Insurance Limited", 
+    "cPersonName": "Andrew", 
+    "email": "andrew@gmail.com", 
+    "sdate": "1998-06-29", 
+    "edate": "2003-08-02", 
+    "ifActive": true, 
+    "interest1": 4, 
+    "interest2": 8, 
+    "interest3": 8 
+    }
+
+###
+DELETE http://localhost:10000/api/6017f5ada7ab67112cce7971

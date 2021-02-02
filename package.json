@@ -8,6 +8,8 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
+    "mongoose": "^5.11.14",
+    "python-shell": "^2.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
@@ -17,9 +19,8 @@
     "xlsx": "^0.16.9"
   },
   "scripts": {
-    "start": "node -r esm server.js",
-    "server": "npm run start",
-    "DevStart": "nodemon -r esm server.js"
+    "start": "nodemon -r esm server.js",
+    "server": "npm run start"
   },
   "eslintConfig": {
     "extends": [
