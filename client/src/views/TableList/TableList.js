@@ -23,6 +23,7 @@ import XLSX from 'xlsx'
 import { addCom, deleteCom, updateCom } from '../../redux/actions/companyActions'
 
 import {loadCompanies} from '../../redux/actions/thunks/index'
+import { saveCom, loadCom, delCom } from '../../redux/reducers/companyReducer'
 
 // MaterialTable ref: https://material-table.com/#/
 // TODO: Add the full object to dispatch and reducer DONE
@@ -66,10 +67,10 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function TableList() {
-  const result = loadCompanies()
   const classes = useStyles();
-  const { useState } = React;
   const dispatch = useDispatch();
+  const state = useSelector((state) => state.company)
+
   const [excelData, setExcelData] = useState()
 
   const [columns, setColumns] = useState([
@@ -83,22 +84,110 @@ export default function TableList() {
     {
       title: 'First Interest',
       field: 'interest1',
-      lookup: { 0: 'No Preference', 1: 'Frontend Developer', 2: 'Backend Developer', 3: 'Full Stack Developer', 4: 'Data Analyst', 5: 'UI Designer', 6: 'Tester', 7: 'Consultant', 8: 'Doc Manager' },
+      lookup: {
+        0: 'No Preference',
+        1: 'AI/Machine Learning',
+        2: 'Architercture Policy and Planning',
+        3: 'Automation of Processes',
+        4: 'Business Analytics',
+        5: 'Blockchain',
+        6: 'CCTV Analytics Build',
+        7: 'Chatbots',
+        8: 'Cloud',
+        9: 'CMS',
+        10: 'Consultancy',
+        11: 'Data Analytics',
+        12: 'Data Mining and Big Data',
+        13: 'Data Visualisation',
+        14: 'Databases',
+        15: 'Development',
+        16: 'Game Development',
+        17: 'Graphics',
+        18: 'Health Informatics',
+        19: 'Information and Data Governanace',
+        20: 'IoT Scoping',
+        21: 'Statistical Modeling and Anlaysis by ML',
+        22: 'Networking Security',
+        23: 'Networking Services',
+        24: 'Project Management',
+        25: 'Robotics',
+        26: 'Telecommunication',
+        27: 'Testing/QA',
+        28: 'UI/UX'
+    },
     },
     {
       title: 'Second Interest',
       field: 'interest2',
-      lookup: { 0: 'No Preference', 1: 'Frontend Developer', 2: 'Backend Developer', 3: 'Full Stack Developer', 4: 'Data Analyst', 5: 'UI Designer', 6: 'Tester', 7: 'Consultant', 8: 'Doc Manager' },
+      lookup: {
+        0: 'No Preference',
+        1: 'AI/Machine Learning',
+        2: 'Architercture Policy and Planning',
+        3: 'Automation of Processes',
+        4: 'Business Analytics',
+        5: 'Blockchain',
+        6: 'CCTV Analytics Build',
+        7: 'Chatbots',
+        8: 'Cloud',
+        9: 'CMS',
+        10: 'Consultancy',
+        11: 'Data Analytics',
+        12: 'Data Mining and Big Data',
+        13: 'Data Visualisation',
+        14: 'Databases',
+        15: 'Development',
+        16: 'Game Development',
+        17: 'Graphics',
+        18: 'Health Informatics',
+        19: 'Information and Data Governanace',
+        20: 'IoT Scoping',
+        21: 'Statistical Modeling and Anlaysis by ML',
+        22: 'Networking Security',
+        23: 'Networking Services',
+        24: 'Project Management',
+        25: 'Robotics',
+        26: 'Telecommunication',
+        27: 'Testing/QA',
+        28: 'UI/UX'
+    },
     },
     {
       title: 'Third Interest',
       field: 'interest3',
-      lookup: { 0: 'No Preference', 1: 'Frontend Developer', 2: 'Backend Developer', 3: 'Full Stack Developer', 4: 'Data Analyst', 5: 'UI Designer', 6: 'Tester', 7: 'Consultant', 8: 'Doc Manager' },
+      lookup: {
+        0: 'No Preference',
+        1: 'AI/Machine Learning',
+        2: 'Architercture Policy and Planning',
+        3: 'Automation of Processes',
+        4: 'Business Analytics',
+        5: 'Blockchain',
+        6: 'CCTV Analytics Build',
+        7: 'Chatbots',
+        8: 'Cloud',
+        9: 'CMS',
+        10: 'Consultancy',
+        11: 'Data Analytics',
+        12: 'Data Mining and Big Data',
+        13: 'Data Visualisation',
+        14: 'Databases',
+        15: 'Development',
+        16: 'Game Development',
+        17: 'Graphics',
+        18: 'Health Informatics',
+        19: 'Information and Data Governanace',
+        20: 'IoT Scoping',
+        21: 'Statistical Modeling and Anlaysis by ML',
+        22: 'Networking Security',
+        23: 'Networking Services',
+        24: 'Project Management',
+        25: 'Robotics',
+        26: 'Telecommunication',
+        27: 'Testing/QA',
+        28: 'UI/UX'
+    },
     },
   ]);
   
-  const state = useSelector((state) => state.company)
-
   var [data, setData] = useState(state);
 
   const [open, setOpen] = React.useState(false);
@@ -181,10 +270,18 @@ export default function TableList() {
     setOpen(false);
   };
 
+  useEffect(() => {
+    fetchCom() 
+  },[])
+
   //test
   function handleClick() {
+    console.log(state)
+  }
 
-    console.log(result)
+  const fetchCom = async () => {
+    const company = await dispatch(loadCom()) 
+    setData(company)
   }
 
   return (
@@ -208,6 +305,7 @@ export default function TableList() {
             setTimeout(() => {
               setData([...data, newData]);
               addCompany(newData);
+              dispatch(saveCom())
               resolve();
             }, 1000)
           }),
@@ -231,6 +329,7 @@ export default function TableList() {
               setData([...dataDelete]);
               console.log(state)
               deleteCompany(state ,index);
+              dispatch(delCom(state[0][index]._id))
               resolve()
             }, 1000)
           }),

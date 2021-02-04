@@ -11,7 +11,7 @@ const router = express.Router();
 
 //Restful Api
 //Getting all
-//TODO: directory issue in python
+//TODO: directory issue in python DONE
 router.get('/company/', async (req, res) => {
     try {
         const companies = await Company.find()
@@ -28,7 +28,8 @@ router.get('/:id', getCompany, (req, res) => {
 })
 
 //Creating one
-router.post('/', async (req, res) => {
+router.post('/company/', async (req, res) => {
+    //TODO: Add a loop to insert an array one by one
     const company = new Company({
         companyName: req.body.companyName,
         cPersonName: req.body.cPersonName,
@@ -57,7 +58,7 @@ router.patch('/:id', getCompany, (req, res) => {
 })
 
 //Deleting one
-router.delete('/:id', getCompany, async (req, res) => {
+router.delete('/company/:id', getCompany, async (req, res) => {
     try {
         await res.company.remove()
         res.json({ message: 'Company Deleted' })

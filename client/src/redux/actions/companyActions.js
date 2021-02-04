@@ -1,31 +1,43 @@
 import {
     LOAD_COMPANIES_LOADING,
     LOAD_COMPANIES_SUCCESS,
-    LOAD_COMPANIES_ERROR
+    LOAD_COMPANIES_ERROR,
+    CREATE_COMPANY,
+    SET_COMPANIES,
+    DELETE_COMPANY,
 } from './action-types'
 
 export const addCom = (ndata) => {
     return {
-        type: "CREATE_COMPANY",
+        type: CREATE_COMPANY,
         payload: {
-          companyName: ndata.companyName,
-          cPersonName: ndata.cPersonName,
-          email: ndata.email,
-          ifActive: ndata.ifActive,
-          sdate: ndata.sdate,
-          edate: ndata.edate,
-          interest1: ndata.interest1,
-          interest2: ndata.interest2,
-          interest3: ndata.interest3,
+            companyName: ndata.companyName,
+            cPersonName: ndata.cPersonName,
+            email: ndata.email,
+            ifActive: ndata.ifActive,
+            listName: ndata.listName,
+            sdate: ndata.sdate,
+            edate: ndata.edate,
+            interest1: ndata.interest1,
+            interest2: ndata.interest2,
+            interest3: ndata.interest3,
         }
+    }
+}
+
+export const setCom = (coms) => {
+    return {
+        type: SET_COMPANIES,
+        payload: coms
     }
 }
 
 export const deleteCom = (comList, index) => {
     return {
-        type: "DELETE_COMPANY",
+        type: DELETE_COMPANY,
         payload: {
-          companyName: comList[index].companyName,
+          id: comList[0][index]._id,
+          companyName: comList[0][index].companyName,
         }
     }
 }
@@ -39,6 +51,7 @@ export const updateCom = (ndata) => {
             cPersonName: ndata.cPersonName,
             email: ndata.email,
             ifActive: ndata.ifActive,
+            listName: ndata.listName,
             sdate: ndata.sdate,
             edate: ndata.edate,
             interest1: ndata.interest1,

@@ -6,13 +6,13 @@ GET http://localhost:10000/api/6017f5ada7ab67112cce7971
 
 ###
 
-POST http://localhost:10000/api/
+POST http://localhost:10000/api/company/
 Content-Type: application/json
 
 { 
-    "companyName": "Tower Insurance Limited", 
-    "cPersonName": "Andrew", 
-    "email": "andrew@gmail.com", 
+    "companyName": "ANZ", 
+    "cPersonName": "Bella", 
+    "email": "Bella@gmail.com", 
     "sdate": "1998-06-29", 
     "edate": "2003-08-02", 
     "ifActive": true, 
@@ -22,4 +22,4 @@ Content-Type: application/json
     }
 
 ###
-DELETE http://localhost:10000/api/6017f5ada7ab67112cce7971
+DELETE http://localhost:10000/api/company/60195e8cd3e914495070c2ee
