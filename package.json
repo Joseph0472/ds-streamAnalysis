@@ -5,6 +5,7 @@
   "dependencies": {
     "@ramonak/react-excel": "^1.0.1",
     "@testing-library/user-event": "^12.1.10",
+    "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-session": "^1.17.0",

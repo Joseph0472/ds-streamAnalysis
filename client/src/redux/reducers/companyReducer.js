@@ -4,7 +4,8 @@ import {
     LOAD_COMPANIES_ERROR,
     CREATE_COMPANY,
     SET_COMPANIES,
-    DELETE_COMPANY
+    DELETE_COMPANY,
+    UPDATE_COMPANY
 } from '../actions/action-types'
 import companyApi from '../../api/company'
 import config from '../../config'
@@ -43,13 +44,11 @@ const companyReducer = (state = [], action) => {
             const i = newState.findIndex(x => x.companyName == payload.companyName);
             newState.splice(i, 1);
             return [...newState];
-        case "UPDATE_COMPANY":
+        case UPDATE_COMPANY:
             const dataUpdate = [...state];
             const index = payload.index;
-
-            //console.log(payload) 
+            console.log(payload) 
             //console.log([...state][index])
-
             dataUpdate[index] = {
                 companyName: payload.companyName,
                 cPersonName: payload.cPersonName,
@@ -110,7 +109,7 @@ export const saveCom = () => async (dispatch, getState) => {
             "Content-type": 'application/json'
         },
         body: JSON.stringify(companies[index])
-    }).then(alert("Company added"))
+    }).then(alert("Company added."))
     //TODO: FIX the adding companies error when adding consecutively
 
 }
@@ -126,7 +125,19 @@ export const delCom = (id) => async (dispatch, getState) => {
     // console.log("deleting id: ", id)
     fetch(config.serverUrl+"/api/company/"+id, {
         method: "DELETE"
-    }).then(alert("Company removed"))
+    }).then(alert("Company removed."))
+    //TODO: RELOAD the companies to maintain the new state DONE
+}
+
+export const upCom = (nrow) => async (dispatch, getState) => {
+    console.log("updating: ", nrow)
+    await fetch(config.serverUrl+"/api/company/"+nrow._id, {
+        method: "PATCH",
+        headers: {
+            "Content-type": 'application/json'
+        },
+        body: JSON.stringify(nrow)
+    }).then(alert("Company updated."))
     //TODO: RELOAD the companies to maintain the new state DONE
 }
 

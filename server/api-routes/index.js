@@ -49,9 +49,23 @@ router.post('/company/', async (req, res) => {
 })
 
 //Updating one
-router.patch('/:id', getCompany, (req, res) => {
-    if (req.body.companyName != null) {
-        res.company.companyName = req.body.cPersonName
+router.patch('/company/:id', getCompany, async (req, res) => {
+    const {companyName, cPersonName, email, ifActive, listName, sdate, edate, interest1, interest2, interest3 } = req.body
+    try {
+        if (companyName) res.company.companyName = companyName;
+        if (cPersonName) res.company.cPersonName = cPersonName;
+        if (email) res.company.email = email;
+        if (ifActive) res.company.ifActive = ifActive;
+        if (listName) res.company.listName = listName;
+        if (sdate) res.company.sdate = sdate;
+        if (edate) res.company.edate = edate;
+        if (interest1) res.company.interest1 = interest1;
+        if (interest2) res.company.interest2 = interest2;
+        if (interest3) res.company.interest3 = interest3;
+        const upcom = await res.company.save()
+        res.json(upcom)
+    } catch(err) {
+        res.status(400).json({ message: err.message})
     }
 })
 
@@ -79,6 +93,7 @@ router.delete('/company/:id', getCompany, async (req, res) => {
 //     console.log(`child pro exits with code: ${code}`)
 // })
 
+// Get a company by id
 async function getCompany(req, res, next) {
     let company
     try {

@@ -23,7 +23,7 @@ import XLSX from 'xlsx'
 import { addCom, deleteCom, updateCom } from '../../redux/actions/companyActions'
 
 import {loadCompanies} from '../../redux/actions/thunks/index'
-import { saveCom, loadCom, delCom } from '../../redux/reducers/companyReducer'
+import { saveCom, loadCom, delCom, upCom } from '../../redux/reducers/companyReducer'
 
 // MaterialTable ref: https://material-table.com/#/
 // TODO: Add the full object to dispatch and reducer DONE
@@ -249,7 +249,10 @@ export default function TableList() {
   }
 
   const updateCompany = (ndata) => {
+    //console.log(ndata)
     dispatch(updateCom(ndata))
+    dispatch(upCom(ndata))
+    dispatch(loadCom())
   }
 
   const addComViaExcel = () => {
@@ -324,7 +327,7 @@ export default function TableList() {
               updateCompany(newData)
               resolve();
             }, 1000)
-          }).then(console.log(newData)),
+          }),
         onRowDelete: oldData =>
           new Promise((resolve, reject) => {
             setTimeout(() => {

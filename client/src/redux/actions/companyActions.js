@@ -43,7 +43,6 @@ export const deleteCom = (comList, index) => {
 }
 
 export const updateCom = (ndata) => {
-    console.log("updating")
     return {
         type: "UPDATE_COMPANY",
         payload: {
